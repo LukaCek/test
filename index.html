@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Import the component -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+<style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .openModelButton {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Models</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Preview</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Wolf</td>
+                <td><button class="openModelButton" data-model="low-poy-wolf.glb">Preview</button></td>
+            </tr>
+            <tr>
+                <td>Držalo</td>
+                <td><button class="openModelButton" data-model="Držalo.glb">Preview</button></td>
+            </tr>
+            <tr>
+                <td>Ohišje</td>
+                <td><button class="openModelButton" data-model="Ohišje.glb">Preview</button></td>
+            </tr>
+            <tr>
+                <td>Pokriv</td>
+                <td><button class="openModelButton" data-model="Pokriv.glb">Preview</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div id="modelPopup"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;">
+        <div
+            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px;">
+            <button id="closeModelButton">Close</button>
+            <model-viewer style="width: 500px; height: 500px;" exposure="0.5" src="low-poy-wolf.glb" ar
+                ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
+                shadow-intensity="1">
+                <div class="progress-bar hide" slot="progress-bar">
+                    <div class="update-bar"></div>
+                </div>
+            </model-viewer>
+        </div>
+    </div>
+</body>
+<script>
+    const openModelButtons = document.querySelectorAll('.openModelButton');
+    const closeModelButton = document.getElementById('closeModelButton');
+    const modelPopup = document.getElementById('modelPopup');
+    const modelViewer = document.querySelector('model-viewer');
+
+    openModelButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const model = button.dataset.model;
+            modelViewer.setAttribute('src', model);
+            modelPopup.style.display = 'block';
+        });
+    });
+
+    closeModelButton.addEventListener('click', () => {
+        modelPopup.style.display = 'none';
+    });
+</script>
+
+</html>
